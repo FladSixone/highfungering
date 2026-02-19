@@ -719,6 +719,12 @@ G={
 		// reality bender abilities
 		new G.perk({name:`pixelate`,desc:`Reality bender ability - rendering your enemies as mere pixels, detaching them from reality!`,tier:4});
 		new G.perk({name:`disassemble`,desc:`Reality bender ability - pick apart your enemies flesh and soul with your mind!`,tier:4});
+		new G.perk({name:`moonscorcher`,desc:`Rher-only ability - Able to inflict moon cancer into contestants, transforming them into a monster of their own shadow`,tier:4});
+		// add the moonscorcher perk into rher or a specified contestant for them to randomly inflict moonscorch
+		// TODO: try to make moonscorcher inflict frienzied for testing
+		// look for references in zombie & ghost, they seem to count as team death count
+		// TODO: add a separate picture for the moonscorched form
+		// TODO: make debuff perks be able to get moonscorched more easily
 
 		G.glob={type:'trait',def:false};
 		new G.perk({name:`any`,desc:`Applies to everyone.`});
@@ -2243,6 +2249,7 @@ G={
 			new G.act(FORCE,['team members:1','+'],`[2] sees no point in being the only member in [1] and dissolves it.`,p=>{p[1].dissolve();});
 			*/
 			
+			/*
 			//trait-related idling
 			new G.act(1,['any'],`[1] [hums a song to [1:themself]|twiddles [1:their] thumbs|thinks about what [1:they] did to end up here|wonders about the future|has a horrible feeling in [1:their] [chest|gut]|stares into the distance].`);
 			new G.act(0.15,['leader','+ team teamalive:>2'],`[1] [hopes to get everyone out of here|tries to keep a brave face on for everyone's sake|prays that everything will go well].`);
@@ -2434,6 +2441,7 @@ G={
 			new G.act(0.175,['respawn_anchor any !inventor%0.5|goth%0.6|the_gift%0.6', 'any', 'delete%0.8 any', 'delete%0.8 any', 'delete%0.8 any', 'delete%0.8 any', 'delete%0.8 any'],`[RED][1] places down [1:their] respawn anchor and attempts to activate it.<br>However, [1:they] made a mistake while trying to activate it, and the respawn anchor blew up into a miniature mushroom cloud in front of [1:them], killing [1:them] instantly. [ALL-1] were also caught in this explosion, killing them as well!`,p=>{for (let i = 1; i < p.length; i++) { p[1].kill(p[i], '[INTENTIONAL GAME DESIGN]'); } p[1].lose('respawn anchor'); });
 			new G.act(1,['angel\'s_revival dead !nihil|sheep|pixelated'],'[BLUE]Out of nowhere, a point in the sky begin to glow a glorious golden shine, as a pair of wings grow out of it - carrying [1]! <br>As it turns out, when [1:they] last died, [1:their] angel in a bottle shattered, which lead to [1:their] revival.',p=>{ p[1].revive('angels'); p[1].lose('angel\'s revival'); });
 			new G.act(0.6,['angel\'s_revival dead !nihil|sheep|pixelated'],'[BLUE]Out of nowhere, a point in the sky begin to glow a glorious golden shine, as a pair of wings grow out of it - carrying [1]! <br>As it turns out, when [1:they] last died, [1:their] angel in a bottle shattered, which lead to [1:their] revival.<br>The angel set [1:them] down gently, then hands [1:them] something - another angel in a bottle!',p=>{ p[1].revive('angels'); p[1].lose('angel\'s revival'); p[1].gain('angel in a bottle'); });
+			*/
 			
 			//finding items
 			var baseItemMult=1.2;
