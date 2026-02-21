@@ -854,7 +854,7 @@ G={
 		new G.perk({name:`duck`,desc:`Has been turned into a duck by a magical incantation.`,out:true,ailment:true});
 		new G.perk({name:`pixelated`,desc:`Has been rendered a mess of pixels.`,out:true,ailment:true});
 		new G.perk({name:`disassembled`,desc:`Has been completely sorted and nicely compartmentalized.`,out:true,ailment:true});
-		new G.perk({name:`moonscorched`,desc:`Transformed into a monster of their worst self.`,out:true})
+		new G.perk({name:`moonscorched`,desc:`Transformed into a monster of their worst self.`,out:true});
         //Additional flags/statuses -TW
 		G.glob.injury = false;
 		G.glob.ailment = true;
@@ -2124,7 +2124,7 @@ G={
 								> must not have a perk marked .out (dead, sheep, comatose etc)
 							'!able'
 								> must have a perk marked .disable (trapped, shell-shocked etc)
-		`					'ailed'
+							'ailed'
   								> must have a perk marked .ailment
 		  					'injured'
 		 						> must have a perk marked .injury
