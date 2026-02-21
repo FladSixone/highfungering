@@ -352,6 +352,29 @@
 			position:absolute;
 			left:-18px;top:-14px;
 		}
+		
+		.picDevil
+		{
+			display:inline-block;
+			position:relative;
+			background-size: cover;
+			width:0px;
+			height:0px;
+			z-index:10;
+			filter:drop-shadow(2px 2px 2px rgba(0,0,0,0.5));
+			pointer-events:none;
+		}
+		.picDevil:before
+		{
+			content:'';
+			display:block;
+			width:21px;
+			height:23px;
+			background-image:url(devil.png);
+			transform: scale(0.95);
+			position:absolute;
+			left:-18px;top:-14px;
+		}
 
 		.teamIcon {
 			position:absolute;
@@ -719,11 +742,11 @@ G={
 		// reality bender abilities
 		new G.perk({name:`pixelate`,desc:`Reality bender ability - rendering your enemies as mere pixels, detaching them from reality!`,tier:4});
 		new G.perk({name:`disassemble`,desc:`Reality bender ability - pick apart your enemies flesh and soul with your mind!`,tier:4});
-		new G.perk({name:`moonscorcher`,desc:`Rher-only ability - Able to inflict moon cancer into contestants, transforming them into a monster of their own shadow`,tier:4});
+		new G.perk({name:`moonscorcher`,desc:`Rher-only ability - Able to afflict moonlight cancer into contestants, transforming them into a monster of their own shadow.`,tier:4});
 		// add the moonscorcher perk into rher or a specified contestant for them to randomly inflict moonscorch
 		// TODO: try to make moonscorcher inflict frienzied for testing
 		// look for references in zombie & ghost, they seem to count as team death count
-		// TODO: add a separate picture for the moonscorched form
+		// TODO: add a separate picture for the moonscorched form 
 		// TODO: make debuff perks be able to get moonscorched more easily
 
 		G.glob={type:'trait',def:false};
@@ -831,6 +854,7 @@ G={
 		new G.perk({name:`duck`,desc:`Has been turned into a duck by a magical incantation.`,out:true,ailment:true});
 		new G.perk({name:`pixelated`,desc:`Has been rendered a mess of pixels.`,out:true,ailment:true});
 		new G.perk({name:`disassembled`,desc:`Has been completely sorted and nicely compartmentalized.`,out:true,ailment:true});
+		new G.perk({name:`moonscorched`,desc:`Transformed into a monster of their worst self.`,out:true})
         //Additional flags/statuses -TW
 		G.glob.injury = false;
 		G.glob.ailment = true;
@@ -1331,7 +1355,8 @@ G={
 					itemsStr+=`${perkSelector('item',char.l.id+'-perk-'+n,items[i])} `;
 					n++;
 				}
-				
+				//DevilPic :
+				// i would have to make a new value/id like char.pic
 				char.l.innerHTML=`
 					<div class="button" style="float:right;" id="${char.l.id+'-delete'}" title="Delete this person">X</div>
 					<div class="handle"></div>
@@ -1339,9 +1364,10 @@ G={
 					Name : <input type="text" size="14" id="${char.l.id+'-name'}" value="${char.name}"/> 
 					<select id="${char.l.id+'-gender'}">${getGenderList(char.gender)}</select> 
 					<select id="${char.l.id+'-tier'}"><option title="Character acts every round." value="0"${char.tier==0?' selected="selected"':''}>main</option><option title="Character only acts every now and then." value="1"${char.tier==1?' selected="selected"':''}>minor</option></select> 
-					Pic URL : <input type="text" size="24" id="${char.l.id+'-picUrl'}" value="${char.pic}"/> 
 					<br>
-					Perks : ${traitsStr} Item : ${itemsStr} 
+					Pic URL : <input type="text" size="24" id="${char.l.id+'-picUrl'}" value="${char.pic}"/>
+					<br>
+					Perks : ${traitsStr} <br> Item : ${itemsStr} 
 				`;
 				addEvent(l(char.l.id+'-delete'),'click',function(){
 					team.members.splice(team.members.indexOf(char),1);
@@ -1411,7 +1437,7 @@ G={
 					var me=team.chars[ii];
 					str+=`
 					<div class="char" style="font-size:12px;">
-						<div class="picBox"><img src="${me.pic}" class="pic" title="${me.name}"/>${me.has('dead')?'<div class="picSkull"></div>':''} ${me.has('revived')?'<div class="picAngel"></div>':''}</div>
+						<div class="picBox"><img src="${me.pic}" class="pic" title="${me.name}"/>${me.has('dead')?'<div class="picSkull"></div>':''} ${me.has('revived')?'<div class="picAngel"></div>':''} ${me.has('moonscorched')?'<div class="picDevil"></div>':''}</div>
 						<div style="text-align:center;">
 							<e style="float:left;margin-right:8px;">${me.name}</e>
 							<div style="min-width:32%;display:inline-block;"><cap>Perks :</cap> ${me.perks.map(perk=>(perk.perk.type=='trait' && perk.perk.name!='no perk')?('<div class="bit" title="'+perk.desc+'">'+perk.perk.name+'</div>'):'').join(' ')}</div>
