@@ -2275,7 +2275,7 @@ G={
 			new G.act(FORCE,['team members:1','+'],`[2] sees no point in being the only member in [1] and dissolves it.`,p=>{p[1].dissolve();});
 			*/
 			
-			/*
+			
 			//trait-related idling
 			new G.act(1,['any'],`[1] [hums a song to [1:themself]|twiddles [1:their] thumbs|thinks about what [1:they] did to end up here|wonders about the future|has a horrible feeling in [1:their] [chest|gut]|stares into the distance].`);
 			new G.act(0.15,['leader','+ team teamalive:>2'],`[1] [hopes to get everyone out of here|tries to keep a brave face on for everyone's sake|prays that everything will go well].`);
@@ -2467,7 +2467,13 @@ G={
 			new G.act(0.175,['respawn_anchor any !inventor%0.5|goth%0.6|the_gift%0.6', 'any', 'delete%0.8 any', 'delete%0.8 any', 'delete%0.8 any', 'delete%0.8 any', 'delete%0.8 any'],`[RED][1] places down [1:their] respawn anchor and attempts to activate it.<br>However, [1:they] made a mistake while trying to activate it, and the respawn anchor blew up into a miniature mushroom cloud in front of [1:them], killing [1:them] instantly. [ALL-1] were also caught in this explosion, killing them as well!`,p=>{for (let i = 1; i < p.length; i++) { p[1].kill(p[i], '[INTENTIONAL GAME DESIGN]'); } p[1].lose('respawn anchor'); });
 			new G.act(1,['angel\'s_revival dead !nihil|sheep|pixelated'],'[BLUE]Out of nowhere, a point in the sky begin to glow a glorious golden shine, as a pair of wings grow out of it - carrying [1]! <br>As it turns out, when [1:they] last died, [1:their] angel in a bottle shattered, which lead to [1:their] revival.',p=>{ p[1].revive('angels'); p[1].lose('angel\'s revival'); });
 			new G.act(0.6,['angel\'s_revival dead !nihil|sheep|pixelated'],'[BLUE]Out of nowhere, a point in the sky begin to glow a glorious golden shine, as a pair of wings grow out of it - carrying [1]! <br>As it turns out, when [1:they] last died, [1:their] angel in a bottle shattered, which lead to [1:their] revival.<br>The angel set [1:them] down gently, then hands [1:them] something - another angel in a bottle!',p=>{ p[1].revive('angels'); p[1].lose('angel\'s revival'); p[1].gain('angel in a bottle'); });
-			*/
+			
+
+			// Moon Idling
+			new G.act(0.3,['moonscorcher !any'],`[GREEN]The moon is glowing with green hue.`);
+			new G.act(0.3,['moonscorcher !any'],`[BLUE]The moon is glowing with a [cold|chilling] blue hue.`);
+			new G.act(0.3,['moonscorcher !any'],`[RED]The moon is glowing with a [blood-|terrifying ]red hue.`);
+			new G.act(0.5,['!any moonscorcher','frenzied%0.5|shell-shocked%0.5|terrified%0.5|suicidal%0.5|unstable%0.4|hallucinating%0.4|dazed%0.3|ailed%0.3|injured%0.3|meek%0.3|any%0.2'],`The Moon God [1] has noticed [2]...`);
 			
 			//finding items
 			var baseItemMult=1.2;
@@ -3203,7 +3209,7 @@ G={
 			//new G.act(0.1,['pet_lobster any !peaceful'],`[1] wants to protect [1:their] precious pet lobster, whatever it takes...<br>Since it's so small, [1:they] decide that the best way is to stay under and avoid confrontations, for now.`,p=>{p[1].gain('peaceful');});
 			
 			// Moonscorch Events
-			new G.act(1,['moonscorcher !any','frenzied%0.5|shell-shocked%0.5|terrified%0.5|suicidal%0.5|unstable%0.4|hallucinating%0.4|dazed%0.3|ailed%0.3|injured%0.3|meek%0.3|any%0.2'],`[RED][2] feels like something [horrible|primal] is [crawling|moving] inside their [skin|body|hollow shell]... [2] is transforming into a [grotesque|horrifying|disgusting] monster!`,p=>{p[2].gain('moonscorched');});
+			new G.act(0.2,['moonscorcher !any','frenzied%0.5|shell-shocked%0.5|terrified%0.5|suicidal%0.5|unstable%0.4|hallucinating%0.4|dazed%0.3|ailed%0.3|injured%0.3|meek%0.3|any%0.2'],`[RED][2] feels like something [horrible|primal] is [crawling|moving] inside [2:their] [skin|body|hollow shell]... [2] is transforming into a [grotesque|horrifying|disgusting] monster!`,p=>{p[2].gain('moonscorched');});
 
 			// Injury Events
 			var healthMinor='bulky%0.3|stubborn%0.3|plot_armor%0.2|any%0.5 !scratched%0.2|bruised%0.2|sick%0.2|dizzy%0.2';
@@ -8091,6 +8097,7 @@ G={
 					{
 						if (tag=='RED'){out+='[RED]'}
 						else if (tag=='BLUE'){out+='[BLUE]'}
+						else if (tag=='GREEN'){out+='[GREEN]'}
 						else if (tag.indexOf('ALL')==0) {
 							let list = [];
 							let exemptList = tag.split('-');
