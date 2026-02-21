@@ -744,10 +744,10 @@ G={
 		new G.perk({name:`disassemble`,desc:`Reality bender ability - pick apart your enemies flesh and soul with your mind!`,tier:4});
 		new G.perk({name:`moonscorcher`,desc:`Rher-only ability - Able to afflict moonlight cancer into contestants, transforming them into a monster of their own shadow.`,out:true});
 		// add the moonscorcher perk into rher or a specified contestant for them to randomly inflict moonscorch
-		// TODO: try to make moonscorcher inflict frienzied for testing
+		// TODO: try to make moonscorcher inflict frienzied for testing :not neccessary, DONE
 		// look for references in zombie & ghost, they seem to count as team death count
-		// TODO: add a separate picture for the moonscorched form 
-		// TODO: make debuff perks be able to get moonscorched more easily
+		// TODO: add a separate picture for the moonscorched form : DONE
+		// TODO: make debuff perks be able to get moonscorched more easily : WIP
 
 		G.glob={type:'trait',def:false};
 		new G.perk({name:`any`,desc:`Applies to everyone.`});
@@ -2468,13 +2468,23 @@ G={
 			new G.act(1,['angel\'s_revival dead !nihil|sheep|pixelated'],'[BLUE]Out of nowhere, a point in the sky begin to glow a glorious golden shine, as a pair of wings grow out of it - carrying [1]! <br>As it turns out, when [1:they] last died, [1:their] angel in a bottle shattered, which lead to [1:their] revival.',p=>{ p[1].revive('angels'); p[1].lose('angel\'s revival'); });
 			new G.act(0.6,['angel\'s_revival dead !nihil|sheep|pixelated'],'[BLUE]Out of nowhere, a point in the sky begin to glow a glorious golden shine, as a pair of wings grow out of it - carrying [1]! <br>As it turns out, when [1:they] last died, [1:their] angel in a bottle shattered, which lead to [1:their] revival.<br>The angel set [1:them] down gently, then hands [1:them] something - another angel in a bottle!',p=>{ p[1].revive('angels'); p[1].lose('angel\'s revival'); p[1].gain('angel in a bottle'); });
 			
+			//Moonscorch Victims Likelihood
+			var MoonVictim='!dead frenzied%0.5|shell-shocked%0.5|terrified%0.5|suicidal%0.5|unstable%0.4|hallucinating%0.4|dazed%0.3|ailed%0.3|injured%0.3|meek%0.3|any%0.2';
 
 			// Moon Idling
-			new G.act(0.3,['moonscorcher !any'],`[GREEN]The moon is glowing with green hue.`);
-			new G.act(0.3,['moonscorcher !any'],`[BLUE]The moon is glowing with a [cold|chilling] blue hue.`);
-			new G.act(0.3,['moonscorcher !any'],`[RED]The moon is glowing with a [blood-|terrifying ]red hue.`);
-			new G.act(0.5,['!any moonscorcher','frenzied%0.5|shell-shocked%0.5|terrified%0.5|suicidal%0.5|unstable%0.4|hallucinating%0.4|dazed%0.3|ailed%0.3|injured%0.3|meek%0.3|any%0.2'],`The Moon God [1] has noticed [2]...`);
+			new G.act(0.1,['moonscorcher !any'],`[GREEN]The moon is glowing with green hue.`);
+			new G.act(0.05,['moonscorcher !any'],`[BLUE]The moon is glowing with a [cold|chilling] blue hue.`);
+			new G.act(0.05,['moonscorcher !any'],`[RED]The moon is glowing with a [blood-|terrifying ]red hue.`);
+			new G.act(0.5,['!any moonscorcher','!moonscorched '+MoonVictim],`The Moon God [1] has noticed [2].`);
+			new G.act(0.5,['!any moonscorcher'],`The Moon God [1] is [approaching|coming|succumbing] [slowly|rapidly|towards earth].`);
+			new G.act(0.3,['!any moonscorcher','!moonscorched|blind '+MoonVictim],`The Moon God [1] is shining its light into [2]'s eyes and its temporarily blinding [2:them]`,p=>{p[2].gain('blind')}); //add blind gain
 			
+			// Moonscorch Events
+			new G.act(0.2,['moonscorcher !any','!moonscorched '+MoonVictim],`[RED][2] is feeling like something [horrible|primal] is [crawling|moving] inside [2:their] [skin|body|hollow shell]...<br>[2] is transforming into a [grotesque|horrifying|disgusting] monster!`,p=>{p[2].gain('moonscorched');});
+			new G.act(0.4,['!any moonscorcher','!moonscorched '+MoonVictim],`The Moon God [1] is [trying to burn|shining hot near] [2] but [2:they] manages to hide, and only being singed with minor burnt marks`,p=>{p[2].gain('singed')});
+			new G.act(0.3,['!any moonscorcher','!moonscorched '+MoonVictim],`The Moon God [1] is [trying to burn|shining hot near] [2] but [2:they] manages to hide, and is painfully seared in some areas`,p=>{p[2].gain('seared')});
+			new G.act(0.3,['!any moonscorcher','!moonscorched '+MoonVictim],`The Moon God [1] is [trying to burn|shining hot near] [2] but [2:they] manages to hide, but is unfortunately disfigured really badly]`,p=>{p[2].gain('burnt')});
+
 			//finding items
 			var baseItemMult=1.2;
 				var newItemMult=baseItemMult*0.2 // New item spawns
@@ -3208,9 +3218,6 @@ G={
 			//pet lobster making people peaceful (disabled for now since the descriptive combat counterpart isnt yet implemented)
 			//new G.act(0.1,['pet_lobster any !peaceful'],`[1] wants to protect [1:their] precious pet lobster, whatever it takes...<br>Since it's so small, [1:they] decide that the best way is to stay under and avoid confrontations, for now.`,p=>{p[1].gain('peaceful');});
 			
-			// Moonscorch Events
-			new G.act(0.2,['moonscorcher !any','frenzied%0.5|shell-shocked%0.5|terrified%0.5|suicidal%0.5|unstable%0.4|hallucinating%0.4|dazed%0.3|ailed%0.3|injured%0.3|meek%0.3|any%0.2'],`[RED][2] feels like something [horrible|primal] is [crawling|moving] inside [2:their] [skin|body|hollow shell]... [2] is transforming into a [grotesque|horrifying|disgusting] monster!`,p=>{p[2].gain('moonscorched');});
-
 			// Injury Events
 			var healthMinor='bulky%0.3|stubborn%0.3|plot_armor%0.2|any%0.5 !scratched%0.2|bruised%0.2|sick%0.2|dizzy%0.2';
 			var healthModerate='bulky%0.2|stubborn%0.2|plot_armor%0.4|any%0.5 !cut_up%0.3|broken%0.3|shot%0.3|singed%0.3';
@@ -3681,6 +3688,13 @@ G={
 
 				if (char.has('dead')) { this.widgets.push('skull'); }
 			};
+			G.charIcon = function(char) {
+				this.pic = char.pic;
+				this.widgets = []; //each one is a string
+				this.char = char;
+
+				if (char.has('moonscorched')) { this.widgets.push('devil'); }
+			};
 			G.ongoingCombats = [];
 			G.combatOverseer = function() {
 				this.participants = [];
@@ -3749,6 +3763,7 @@ G={
 						if (box.charList[ii].char.team?.icon) { str += '<div class="teamIcon" style="background-image: url('+box.charList[ii].char.team.icon+');"></div>'; }
 						if (box.charList[ii].widgets.includes('skull')) { str += '<div class="picSkull"></div>'; }
 						if (box.charList[ii].widgets.includes('angel')) { str += '<div class="picAngel"></div>'; }
+						if (box.charList[ii].widgets.includes('devil')) { str += '<div class="picDevil"></div>'; }
 						str += '</div>';
 					} }
 					let realList = [];
@@ -3794,6 +3809,16 @@ G={
 					let me = this.out[boxIndex].charList[i];
 					if (me.char.name != name) { continue; }
 					if (!me.widgets.includes('angel')) { me.widgets.push('angel'); return true; } else { return false; }
+				}
+				return false; 
+			}
+			G.combatOverseer.prototype.injectDevil= function(name, boxIndex) {
+				if (!this.out.length) { return false; }
+				boxIndex = boxIndex||(this.out.length - 1);
+				for (let i in this.out[boxIndex].charList) {
+					let me = this.out[boxIndex].charList[i];
+					if (me.char.name != name) { continue; }
+					if (!me.widgets.includes('devil')) { me.widgets.push('devil'); return true; } else { return false; }
 				}
 				return false; 
 			}
@@ -8266,6 +8291,7 @@ G={
 								if (chars[ii].team?.icon) { pics += '<div class="teamIcon" style="background-image: url(' + chars[ii].team.icon + ');"></div>'; }
 								if (chars[ii].has('dead')) { pics += `<div class="picSkull"></div>`; }
 								if (chars[ii].has('revived')) { pics += `<div class="picAngel"></div>`; }
+								if (chars[ii].has('moonscorched')) { pics += `<div class="picDevil"></div>`; }
 								pics += '</div>';
 							}
 							str += `<div class="box action${action.classes ? (' ' + action.classes) : ''}"><div class="actionCharContainer">${pics}</div><div>${action.text}</div></div>`;
