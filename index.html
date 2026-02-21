@@ -742,7 +742,7 @@ G={
 		// reality bender abilities
 		new G.perk({name:`pixelate`,desc:`Reality bender ability - rendering your enemies as mere pixels, detaching them from reality!`,tier:4});
 		new G.perk({name:`disassemble`,desc:`Reality bender ability - pick apart your enemies flesh and soul with your mind!`,tier:4});
-		new G.perk({name:`moonscorcher`,desc:`Rher-only ability - Able to afflict moonlight cancer into contestants, transforming them into a monster of their own shadow.`,tier:4});
+		new G.perk({name:`moonscorcher`,desc:`Rher-only ability - Able to afflict moonlight cancer into contestants, transforming them into a monster of their own shadow.`,out:true});
 		// add the moonscorcher perk into rher or a specified contestant for them to randomly inflict moonscorch
 		// TODO: try to make moonscorcher inflict frienzied for testing
 		// look for references in zombie & ghost, they seem to count as team death count
@@ -3202,6 +3202,9 @@ G={
 			//pet lobster making people peaceful (disabled for now since the descriptive combat counterpart isnt yet implemented)
 			//new G.act(0.1,['pet_lobster any !peaceful'],`[1] wants to protect [1:their] precious pet lobster, whatever it takes...<br>Since it's so small, [1:they] decide that the best way is to stay under and avoid confrontations, for now.`,p=>{p[1].gain('peaceful');});
 			
+			// Moonscorch Events
+			new G.act(1,['moonscorcher !any','frenzied%0.5|shell-shocked%0.5|terrified%0.5|suicidal%0.5|unstable%0.4|hallucinating%0.4|dazed%0.3|ailed%0.3|injured%0.3|meek%0.3|any%0.2'],`[RED][2] feels like something [horrible|primal] is [crawling|moving] inside their [skin|body|hollow shell]... [2] is transforming into a [grotesque|horrifying|disgusting] monster!`,p=>{p[2].gain('moonscorched');});
+
 			// Injury Events
 			var healthMinor='bulky%0.3|stubborn%0.3|plot_armor%0.2|any%0.5 !scratched%0.2|bruised%0.2|sick%0.2|dizzy%0.2';
 			var healthModerate='bulky%0.2|stubborn%0.2|plot_armor%0.4|any%0.5 !cut_up%0.3|broken%0.3|shot%0.3|singed%0.3';
