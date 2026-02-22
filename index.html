@@ -2469,21 +2469,38 @@ G={
 			new G.act(0.6,['angel\'s_revival dead !nihil|sheep|pixelated'],'[BLUE]Out of nowhere, a point in the sky begin to glow a glorious golden shine, as a pair of wings grow out of it - carrying [1]! <br>As it turns out, when [1:they] last died, [1:their] angel in a bottle shattered, which lead to [1:their] revival.<br>The angel set [1:them] down gently, then hands [1:them] something - another angel in a bottle!',p=>{ p[1].revive('angels'); p[1].lose('angel\'s revival'); p[1].gain('angel in a bottle'); });
 			
 			//Moonscorch Victims Likelihood
-			var MoonVictim='!dead frenzied%0.5|shell-shocked%0.5|terrified%0.5|suicidal%0.5|unstable%0.4|hallucinating%0.4|dazed%0.3|ailed%0.3|injured%0.3|meek%0.3|any%0.2';
+			var MoonVictim='!dead frenzied%0.5|shell-shocked%0.5|terrified%0.5|suicidal%0.5|unstable%0.4|hallucinating%0.4|dazed%0.3|ailed%0.3|injured%0.3|meek%0.3|any%0.2'; //rework ts
 
 			// Moon Idling
 			new G.act(0.1,['moonscorcher !any'],`[GREEN]The moon is glowing with green hue.`);
 			new G.act(0.05,['moonscorcher !any'],`[BLUE]The moon is glowing with a [cold|chilling] blue hue.`);
 			new G.act(0.05,['moonscorcher !any'],`[RED]The moon is glowing with a [blood-|terrifying ]red hue.`);
+			new G.act(0.5,['!any moonscorcher'],`The Moon God [1] is [approaching|coming|succumbing] [slowly|steadily|rapidly|near|towards earth][. No one seems to take notice of this.|. Some are wary of this.|.]`);
 			new G.act(0.5,['!any moonscorcher','!moonscorched '+MoonVictim],`The Moon God [1] has noticed [2].`);
-			new G.act(0.5,['!any moonscorcher'],`The Moon God [1] is [approaching|coming|succumbing] [slowly|rapidly|towards earth].`);
-			new G.act(0.3,['!any moonscorcher','!moonscorched|blind '+MoonVictim],`The Moon God [1] is shining its light into [2]'s eyes and its temporarily blinding [2:them]`,p=>{p[2].gain('blind')}); //add blind gain
+			new G.act(0.5,['!any moonscorcher','!moonscorched '+MoonVictim],`The Moon God [1]'s [presence|large silhouette|large presence] has made [2] [alert|aware of the surroundings].`,p=>{p[2].gain('alert')});
+			//new G.act(0.3,['!any moonscorcher','!moonscorched|blind '+MoonVictim],`The Moon God [1] is shining its light into [2]'s eyes and [is temporarily blinding|it temporarily blinds] [2:them]`,p=>{p[2].gain('blind')}); //add blind gain
 			
 			// Moonscorch Events
-			new G.act(0.2,['moonscorcher !any','!moonscorched '+MoonVictim],`[RED][2] is feeling like something [horrible|primal] is [crawling|moving] inside [2:their] [skin|body|hollow shell]...<br>[2] is transforming into a [grotesque|horrifying|disgusting] monster!`,p=>{p[2].gain('moonscorched');});
-			new G.act(0.4,['!any moonscorcher','!moonscorched '+MoonVictim],`The Moon God [1] is [trying to burn|shining hot near] [2] but [2:they] manages to hide, and only being singed with minor burnt marks`,p=>{p[2].gain('singed')});
-			new G.act(0.3,['!any moonscorcher','!moonscorched '+MoonVictim],`The Moon God [1] is [trying to burn|shining hot near] [2] but [2:they] manages to hide, and is painfully seared in some areas`,p=>{p[2].gain('seared')});
-			new G.act(0.3,['!any moonscorcher','!moonscorched '+MoonVictim],`The Moon God [1] is [trying to burn|shining hot near] [2] but [2:they] manages to hide, but is unfortunately disfigured really badly]`,p=>{p[2].gain('burnt')});
+			new G.act(0.2,['moonscorcher !any','!moonscorched '+MoonVictim],`[RED][2] is feeling like something [horrible|primal] is [crawling|moving] inside [2:their] [skin|body|hollow shell]...<br>[2] is transforming into a [grotesque|horrifying|disgusting] [monster|creature]!`,p=>{p[2].gain('moonscorched');});
+			
+			new G.act(0.4,['!any moonscorcher','!moonscorched '+MoonVictim],`[RED]The Moon God [1] is [trying to burn|shining hot near] [2] but [2:they] manages to hide, and only being singed with minor burnt marks`,p=>{p[2].gain('singed')});
+			new G.act(0.3,['!any moonscorcher','!moonscorched '+MoonVictim],`[RED]The Moon God [1] is [trying to burn|shining hot near] [2] but [2:they] manages to hide, and is painfully seared in some areas`,p=>{p[2].gain('seared')});
+			new G.act(0.3,['!any moonscorcher','!moonscorched '+MoonVictim],`[RED]The Moon God [1] is [trying to burn|shining hot near] [2] but [2:they] manages to hide, but is unfortunately disfigured really badly`,p=>{p[2].gain('burnt')});
+
+			//supernatural aura
+			new G.act(0.5,['!any moonscorcher','!moonscorched '+MoonVictim],`The Moon God [1]'s aura has only made [2] [be light-headed|dizzy|woozy|be confused|a bit small-shocked].`,p=>{p[2].gain('dizzy')});
+			new G.act(0.4,['!any moonscorcher','!moonscorched '+MoonVictim],`[RED]The Moon God [1]'s [supernatural|psychic|unnatural] [aura|powers|force] sends [streams of consciousness|lynchian dreams and nightmares|abstract and unintelligible hallucinations] into [2]'s [brain|mind|memory|limbic system].`,p=>{p[2].gain('dazed')});
+			new G.act(0.3,['!any moonscorcher','!moonscorched '+MoonVictim],`[RED]The Moon God [1]'s [supernatural|psychic|unnatural] [aura|powers|force] is sending [billion years of undocumented knowledge about the universe|the collective consciousness worst fears] into [2]'s [brain|mind|memory|limbic system] until [2:they] [stands in terror|cannot handle it all].`,p=>{p[2].gain('shell-shocked')});
+			//hallucination when
+			//unstable & lunatic when
+			//i forgot why i deleted terrified
+
+			// weak vulnerable
+
+			//Moonscorched Idling/Combat
+			new G.act(1,['!any moonscorched'],`[1] lets out [menacing|horrid] [howls|roars|cries|screeches]. [The sounds are anything but human|But no one hears it].`);
+
+			
 
 			//finding items
 			var baseItemMult=1.2;
