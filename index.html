@@ -1747,11 +1747,11 @@ G={
 						if (this.has('survivalist')) { pow *= 0.85; }
 						if (this.has('frenzied')) { pow *= 0.75; }
 						if (this.has('alert')) { pow *= 0.75; }
-						if (this.has('ninja')) { pow *= 0.95; }
 						if (this.has('combat gear')) { pow *= 0.7; }
 						if (this.has('knight armor')) { pow *= 0.8; }
 						if (this.has('kevlar vest')) { pow *= 0.9; }
 						if (this.has('ironskin')) { pow *= 0.7; }
+						//if (this.has('moonscorched')) { pow *= 0.95; }
 
 						return 1 - Math.pow(1 - c, pow);
 					}
@@ -2475,7 +2475,7 @@ G={
 			new G.act(0.1,['moonscorcher !any'],`[GREEN]The moon is glowing with green hue.`);
 			new G.act(0.05,['moonscorcher !any'],`[BLUE]The moon is glowing with a [cold|chilling] blue hue.`);
 			new G.act(0.05,['moonscorcher !any'],`[RED]The moon is glowing with a [blood-|terrifying ]red hue.`);
-			new G.act(0.5,['!any moonscorcher'],`The Moon God [1] is [approaching|coming|succumbing] [slowly|steadily|rapidly|near|towards earth][. No one seems to take notice of this.|. Some are wary of this.|.]`);
+			new G.act(0.5,['!any moonscorcher'],`The Moon God [1] is [approaching|coming|succumbing] [slowly|steadily|rapidly|near|towards earth].`); /*[. No one seems to take notice of this.|. Some are wary of this.|.]`*/
 			new G.act(0.5,['!any moonscorcher','!moonscorched '+MoonVictim],`The Moon God [1] has noticed [2].`);
 			new G.act(0.5,['!any moonscorcher','!moonscorched '+MoonVictim],`The Moon God [1]'s [presence|large silhouette|large presence] has made [2] [alert|aware of the surroundings].`,p=>{p[2].gain('alert')});
 			//new G.act(0.3,['!any moonscorcher','!moonscorched|blind '+MoonVictim],`The Moon God [1] is shining its light into [2]'s eyes and [is temporarily blinding|it temporarily blinds] [2:them]`,p=>{p[2].gain('blind')}); //add blind gain
@@ -2499,6 +2499,9 @@ G={
 
 			//Moonscorched Idling/Combat
 			new G.act(1,['!any moonscorched'],`[1] lets out [menacing|horrid] [howls|roars|cries|screeches]. [The sounds are anything but human|But no one hears it].`);
+
+			//new G.act(1,['!any the_gift moonscorched'],` `); //supernatural attacks
+			//new G.act(1,['!any '])
 
 			
 
